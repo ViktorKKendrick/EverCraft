@@ -4,6 +4,6 @@
 
 ### Date Start: 12/21/21
 
-Robin: Race iteration 
-Ticia: Classes iteration 
-Kole: Character Creation iteration  
+- Robin: Race iteration 
+- Ticia: Classes iteration 
+- Kole: Character Creation iteration  

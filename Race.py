@@ -67,5 +67,7 @@ halfElf = Race(
 # needs to be able to chose a language
 # ability score increase is Cha + 2 and needs to be able to choose an ability to increase by 1
 # hafling = Race()
-
-print(dragonborn)
+# halfOrc = Race()
+# human = Race()
+# tiefling = Race()
+# print(dragonborn)

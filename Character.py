@@ -1,20 +1,32 @@
 from random import randrange
+from Modifiers import *
+from Roll import *
 # Character Class
 
 class Character:
+    level = 1
+    Strength = 10
+    Dexterity = 10
+    Constitution = 10
+    Wisdom = 10
+    Intelligence = 10
+    Charisma = 10
+    ac= 10 + modifiers[Dexterity]
+    hitPoints= 5 + modifiers[Constitution] if modifiers[Constitution] > 0 else 5 + 1
+    exp = 0
+    attRollMod = modifiers[Strength]
+    attMod = modifiers[Strength]
+
     # Constructor
-    def __init__(self, first, last, charClass, alignment):
-        self.first = first
-        self.last = last
+    def __init__(self, name, charClass, alignment, race= 'human'):
+        self.race = race
+        self.name= name
         self.charClass = charClass
-        self.ac = 10
-        self.hitPoints = 5
-        self.exp = 0
         self.alignment = 'Neutral' if alignment == 0 else 'Evil' if alignment == -1 else 'Good'
     
     # Gets character name
     def getName(self):
-        return '{} {}'.format(self.first, self.last)
+        return self.name
     
     # Gets character alignment
     def getAlignment(self):
@@ -22,45 +34,50 @@ class Character:
 
     # Changes Alignment
     def setAlignment(self, alignment):
-        self.alignment = 'Neutral' if alignment == 0 else 'Evil' if alignment == -1 else 'Good'
+        self.alignment = 'Good' if alignment == 1 else 'Evil' if alignment == -1 else 'Neutral'
     
     # Set up character sheet for readablility 
     def getCharSheet(self):
         print(' ')
-        print('Name: ' + self.getName())
-        print('Class: ' + self.charClass)
-        print('Alignment: ' + self.alignment)
-        print('AC: ' + str(self.ac))
-        print('Hit Points: ' + str(self.hitPoints))
-        print(' ')
+        print('''
+        Name: ''' + self.name +  Spaces(6) + 'Class: ' + self.charClass + Spaces(6) + 'Race: ' + self.race + '''
+        Alignment: ''' + self.alignment + Spaces(11) + 'AC: ' + str(self.ac) + Spaces(12) + 'Hit Points: ' + str(self.hitPoints) + '''
+        level: ''' + str(self.level)  + Spaces(18) + 'exp: ' + str(self.exp) + ''''''
+        )
+        print('''
+        Strength: ''' + str(self.Strength) +  Spaces(16) + 'Modifier: ' + str(modifiers[self.Strength]) + '''
+        Dexterity: ''' + str(self.Dexterity) + Spaces(15) + 'Modifier: ' + str(modifiers[self.Dexterity]) + '''
+        Constitution: ''' + str(self.Constitution) + Spaces(12) + 'Modifier: ' + str(modifiers[self.Constitution]) + '''
+        Wisdom: ''' + str(self.Wisdom) +  Spaces(18) + 'Modifier: ' + str(modifiers[self.Wisdom]) + '''
+        Intelligence: ''' + str(self.Intelligence) + Spaces(12) + 'Modifier: ' + str(modifiers[self.Intelligence]) + '''
+        Charisma: ''' + str(self.Charisma) + Spaces(16) + 'Modifier: ' + str(modifiers[self.Charisma]) + '''
+        ''')
     
     # Attack Method
     def attack(self, target):
-        # attackRoll = randrange(1, 21, 2)
-        attackRoll= 11
+        attackRoll= 11 + self.attRollMod
+        damage = ((1 + self.attMod) * 2) if ((1 + self.attMod)*2 > 1) else 1
         if attackRoll == 20:
-            target.hitPoints = target.hitPoints - 2
+            target.hitPoints = target.hitPoints - damage
             print('critical hit')
         if attackRoll >= target.ac:
-            target.hitPoints = target.hitPoints - 1
-            print('hit')
+            if target.hitPoints > 0:
+                target.hitPoints = target.hitPoints - (damage/2)
+                print('hit')
+                self.exp += 1000
+                if (self.exp%1000) == 0:
+                    self.levelUp()
+                if target.hitPoints <= 0:
+                    print('target is dead')
+                self.getCharSheet()
+            else:
+                print('target is already dead, attack someone else you murderer!')
         else:
             print('fail')
 
-# Test Cases
-char1 = Character('Main', 'Character', 'Rogue', 1)
-char2 = Character('Secondary', 'Character', 'Knight', 0)
-char3 = Character('Useless', 'Character', 'Wizard', -1)
-char1.getCharSheet()
-# char1.attack(char2)
-char2.getCharSheet()
-char3.getCharSheet()
-
-# Input
-while 0 != 1:
-    if input() == 'attack':
-        print('Attack who? ')
-        target = input()
-        target = char1 if target == 'char1' else char2 if target == 'char2' else char3
-        char1.attack(target)
-        target.getCharSheet()
+    # LevelUp Method
+    def levelUp(self):
+        self.level += 1
+        self.hitPoints += (5 + modifiers[self.Constitution])
+        if (self.level%2) == 0:
+            self.attRollMod += 1

@@ -38,3 +38,10 @@ class Monk(Character):
                 print('target is already dead, attack someone else you murderer!')
         else:
             print('fail')
+            
+    # LevelUp Method
+    def levelUp(self):
+        self.level += 1
+        self.hitPoints += (6 + modifiers[self.Constitution])
+        if (self.level%2) == 0 or self.level % 3 == 0:
+            self.attRollMod += 1

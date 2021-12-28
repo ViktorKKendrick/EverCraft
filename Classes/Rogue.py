@@ -19,7 +19,7 @@ class Rogue(Character):
             target.hitPoints = target.hitPoints - damage
             print('critical hit')
         # ignores an opponents Dexterity modifier (if positive) to Armor Class when attacking
-        target_ac = target.ac - modifiers[Dexterity]
+        target_ac = target.ac - modifiers[target.Dexterity] if modifiers[target.Dexterity] >= 0 else target.ac
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
                 target.hitPoints = target.hitPoints - (damage/3)

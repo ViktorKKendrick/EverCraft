@@ -2,8 +2,8 @@ import Character
 from Modifiers import *
 
 
-class Monk(Character):
-    def __init__(self, first, last, alignment):
+class Paladin(Character):
+    def __init__(self):
         self.hitPoints = 8  # 8HP per level
         self.charClass = 'Paladin'
         # can only have Good alignment
@@ -18,14 +18,13 @@ class Monk(Character):
     # Attack Method
     def attack(self, target):
         # attacks roll is increased by 1 for every level instead of every other level
-        attackRoll = 11 + self.attRollMod + self.attack_on_evil + 1 * self.level
+        attackRoll = 11 + self.attRollMod + self.attack_on_evil(target)
         # +2 to attack and damage when attacking Evil characters
-        damage = ((1 + self.attMod) * 2) + self.attack_on_evil if ((1 +
-                                                                    self.attMod)*2 > 1) else 1 + self.attack_on_evil
+        damage = ((1 + self.attMod) * 2) + self.attack_on_evil if ((1 + self.attMod)*2 > 1) else 1 + self.attack_on_evil
         if attackRoll == 20:
             # does triple damage when critting on an Evil character
             if target.alignment == 'Evil':
-                target.hitPoints = target.hitPoints - damage * 3
+                target.hitPoints = target.hitPoints - (damage/2) * 3
                 print('critical critical hit')
             else:
                 target.hitPoints = target.hitPoints - damage
@@ -44,3 +43,10 @@ class Monk(Character):
                 print('target is already dead, attack someone else you murderer!')
         else:
             print('fail')
+            
+    # LevelUp Method
+    def levelUp(self):
+        self.level += 1
+        self.hitPoints += (8 + modifiers[self.Constitution])
+        # attacks roll is increased by 1 for every level instead of every other level
+        self.attRollMod += 1

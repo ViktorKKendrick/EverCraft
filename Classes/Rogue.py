@@ -13,15 +13,15 @@ class Rogue(Character):
     # Attack Method
     def attack(self, target):
         attackRoll = 11 + self.attRollMod
-        damage = ((1 + self.attMod) * 2) if ((1 + self.attMod)*2 > 1) else 1
+        damage = ((1 + self.attMod) * 2) * 3 if ((1 + self.attMod)*2 > 1) else 1 * 3
         if attackRoll == 20:
             # does triple damage on critical hits
-            target.hitPoints = target.hitPoints - damage * 3
+            target.hitPoints = target.hitPoints - damage
             print('critical hit')
         # ignores an opponents Dexterity modifier (if positive) to Armor Class when attacking
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage/3)
                 print('hit')
                 self.exp += 1000
                 if (self.exp % 1000) == 0:

@@ -9,16 +9,9 @@ class Monk(Character):
         # adds Wisdom modifier (if positive) to Armor Class in addition to Dexterity
         self.ac = 10 + modifiers[Dexterity] + modifiers[Wisdom]
 
-    def incr_att_by_level(level):
-        # attack roll is increased by 1 every 2nd and 3rd level
-        if level % 2 == 0 or level % 3 == 0:
-            return 1 * level
-        else:
-            return 0
-
     # Attack Method
     def attack(self, target):
-        attackRoll = 11 + self.attRollMod + self.inc_att_by_level(self.level)
+        attackRoll = 11 + self.attRollMod
         # does 3 points of damage instead of 1 when successfully attacking
         damage = ((3 + self.attMod) * 2) if ((3 + self.attMod)*2 > 1) else 3
         if attackRoll == 20:

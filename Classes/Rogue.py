@@ -9,6 +9,7 @@ class Rogue(Character):
         self.charClass = 'Rogue'
         # adds Dexterity modifier to attacks instead of Strength
         self.attMod = modifiers[Dexterity]
+        self.attRollMod = modifiers[Dexterity]
 
     # Attack Method
     def attack(self, target):

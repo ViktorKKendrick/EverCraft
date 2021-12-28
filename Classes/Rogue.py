@@ -13,7 +13,7 @@ class Rogue(Character):
     # Attack Method
     def attack(self, target):
         attackRoll = 11 + self.attRollMod
-        damage = ((1 + self.attMod) * 3) if ((1 + self.attMod)*2 > 1) else 1
+        damage = ((1 + self.attMod) * 3) if ((1 + self.attMod)*3 > 1) else 1
         if attackRoll == 20:
             # does triple damage on critical hits
             target.hitPoints = target.hitPoints - damage

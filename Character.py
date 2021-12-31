@@ -1,6 +1,8 @@
 from random import randrange
 from Modifiers import *
 from Roll import *
+from Weapon import *
+from All_Weapons import *
 # Character Class
 
 class Character:
@@ -12,7 +14,7 @@ class Character:
     Intelligence = 10
     Charisma = 10
     ac= 10 + modifiers[Dexterity]
-    hitPoints= 5 + modifiers[Constitution] if modifiers[Constitution] > 0 else 5 + 1
+    hitPoints= 30 + modifiers[Constitution] if modifiers[Constitution] >= 0 else 5 + 1
     exp = 0
     attRollMod = modifiers[Strength]
     attMod = modifiers[Strength]
@@ -56,20 +58,30 @@ class Character:
     # Attack Method
     def attack(self, target):
         attackRoll= 11 + self.attRollMod
-        damage = ((1 + self.attMod) * 2) if ((1 + self.attMod)*2 > 1) else 1
+        weapon_name = self.weapon['name']
+        print(weapon_name)
+        damage = ((int(self.weapon['base_dam']) + self.attMod)) if ((int(self.weapon['base_dam']) + self.attMod) > 1) else 1
+        if weapon_name == 'elven longsword':
+            if (self.race == 'elf') and (target.race == 'orc'):
+                damage +=5
+            elif self.race == 'elf' or target.race == 'orc':
+                damage+=2
+        if weapon_name == 'longsword':
+            damage +=5
         if attackRoll == 20:
-            target.hitPoints = target.hitPoints - damage
+            target.hitPoints = target.hitPoints - (damage*2)
             print('critical hit')
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage)
                 print('hit')
-                self.exp += 1000
+                self.exp += 10
                 if (self.exp%1000) == 0:
                     self.levelUp()
                 if target.hitPoints <= 0:
                     print('target is dead')
                 self.getCharSheet()
+                target.getCharSheet()
             else:
                 print('target is already dead, attack someone else you murderer!')
         else:
@@ -81,3 +93,8 @@ class Character:
         self.hitPoints += (5 + modifiers[self.Constitution])
         if (self.level%2) == 0:
             self.attRollMod += 1
+
+    def equip(self, weapon_name):
+        self.weapon = weapons[all_w[weapon_name]]
+        print(self.weapon)
+        # print(self.weapon[])

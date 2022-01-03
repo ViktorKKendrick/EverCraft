@@ -10,13 +10,13 @@ class Fighter(Character):
     # Attack Method for Fighter
     def attack(self, target, level):
         attackRoll = 11 + self.attRollMod
-        damage = ((1 + self.attMod) * 2) if ((1 + self.attMod)*2 > 1) else 1
+        damage = ((1 + self.attMod)) if ((1 + self.attMod) > 1) else 1
         if attackRoll == 20:
-            target.hitPoints = target.hitPoints - damage
+            target.hitPoints = target.hitPoints - (damage*2)
             print('critical hit')
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage)
                 print('hit')
                 self.exp += 1000
                 if (self.exp % 1000) == 0:

@@ -20,18 +20,18 @@ class Paladin(Character):
         # attacks roll is increased by 1 for every level instead of every other level
         attackRoll = 11 + self.attRollMod + self.attack_on_evil(target)
         # +2 to attack and damage when attacking Evil characters
-        damage = ((1 + self.attMod) * 2) + self.attack_on_evil if ((1 + self.attMod)*2 > 1) else 1 + self.attack_on_evil
+        damage = ((1 + self.attMod) ) + self.attack_on_evil if ((1 + self.attMod) > 1) else 1 + self.attack_on_evil
         if attackRoll == 20:
             # does triple damage when critting on an Evil character
             if target.alignment == 'Evil':
-                target.hitPoints = target.hitPoints - (damage/2) * 3
+                target.hitPoints = target.hitPoints - (damage * 3)
                 print('critical critical hit')
             else:
-                target.hitPoints = target.hitPoints - damage
+                target.hitPoints = target.hitPoints - (damage * 2)
                 print('critical hit')
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage)
                 print('hit')
                 self.exp += 1000
                 if (self.exp % 1000) == 0:

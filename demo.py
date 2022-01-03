@@ -2,7 +2,7 @@ from Character import *
 from Modifiers import *
 from Roll import *
 
-char1 = Character('Main Character', 'Rogue', 1)
+char1 = Character('Main Character', 'Rogue', 1, 'orc')
 char2 = Character('Secondary Character', 'Knight', 0)
 char3 = Character('Useless Character', 'Wizard', -1)
 
@@ -10,8 +10,8 @@ name = input('what is your name? ')
 user_class = input('what is your class? ')
 alignment = int(input('what is your alignment? '))
 
-custom = Character(name, user_class, alignment)
-
+custom = Character(name, user_class, alignment, 'elf')
+custom.equip('elven_longsword')
 custom.getCharSheet()
 
 while 0 != 1:
@@ -24,5 +24,7 @@ while 0 != 1:
             break
         custom.attack(target)
         
+    if user_input == 'weapon damage':
+        print(custom.weapon['base_dam'])
     elif user_input == 'exit':
         break

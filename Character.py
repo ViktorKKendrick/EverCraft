@@ -1,6 +1,8 @@
 from random import randrange
 from Modifiers import *
 from Roll import *
+from Weapon import *
+from All_Weapons import *
 # Character Class
 
 
@@ -13,8 +15,8 @@ class Character:
     Intelligence = 10
     Charisma = 10
     ac = 10 + modifiers[Dexterity]
-    hitPoints = 5 + \
-        modifiers[Constitution] if modifiers[Constitution] > 0 else 5 + 1
+    hitPoints = 30 + \
+        modifiers[Constitution] if modifiers[Constitution] >= 0 else 5 + 1
     exp = 0
     attRollMod = modifiers[Strength]
     attMod = modifiers[Strength]
@@ -113,3 +115,8 @@ class Character:
         self.hitPoints += (5 + modifiers[self.Constitution])
         if (self.level % 2) == 0:
             self.attRollMod += 1
+
+    def equip(self, weapon_name):
+        self.weapon = weapons[all_w[weapon_name]]
+        print(self.weapon)
+        # print(self.weapon[])

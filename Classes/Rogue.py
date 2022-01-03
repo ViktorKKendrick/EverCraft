@@ -9,19 +9,21 @@ class Rogue(Character):
         self.charClass = 'Rogue'
         # adds Dexterity modifier to attacks instead of Strength
         self.attMod = modifiers[Dexterity]
+        self.attRollMod = modifiers[Dexterity]
 
     # Attack Method
     def attack(self, target):
         attackRoll = 11 + self.attRollMod
-        damage = ((1 + self.attMod) * 2) if ((1 + self.attMod)*2 > 1) else 1
+        damage = ((1 + self.attMod)) if ((1 + self.attMod) > 1) else 1
         if attackRoll == 20:
             # does triple damage on critical hits
-            target.hitPoints = target.hitPoints - damage * 3
+            target.hitPoints = target.hitPoints - (damage*3)
             print('critical hit')
         # ignores an opponents Dexterity modifier (if positive) to Armor Class when attacking
-        if attackRoll >= target.ac:
+        target_ac = target.ac - modifiers[target.Dexterity] if modifiers[target.Dexterity] >= 0 else target.ac
+        if attackRoll >= target_ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage)
                 print('hit')
                 self.exp += 1000
                 if (self.exp % 1000) == 0:

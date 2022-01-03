@@ -66,21 +66,32 @@ class Character:
             (int(self.weapon['base_dam']) + self.attMod) > 1) else 1
         if weapon_name == 'elven longsword':
             if (self.race == 'elf') and (target.race == 'orc'):
-                damage += 5
+                # +5 to attack and damage when wielded by an elf and against orc
+                damage += 11
+                attackRoll += 6
             elif self.race == 'elf' or target.race == 'orc':
-                damage += 2
+                # +2 to attack and damage when wielded by an elf or against an orc
+                damage += 8
+                attackRoll += 3
+            else:
+                # does 5 points of damage
+                # +1 to attack and damage
+                damage += 6
+                attackRoll += 1
         if weapon_name == 'longsword':
             damage += 5
         if weapon_name == 'waraxe':
             # does 6 points of damage
-            damage += 6
+            # +2 to damage
+            damage += 8
+            # +2 to attack
+            attackRoll += 2
         if weapon_name == 'nunchucks':
             if self.charClass != 'monk':
-                # does 6 points of damage
-                damage += 6
-            else:
                 # when used by a non-monk there is a -4 penalty to attack
-                damage -= 4
+                atttackRoll -= 4
+            # does 6 points of damage
+            damage += 6
 
         if attackRoll == 20:
             # triple damage on a critical (quadruple for a Rogue)

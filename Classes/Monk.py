@@ -13,13 +13,13 @@ class Monk(Character):
     def attack(self, target):
         attackRoll = 11 + self.attRollMod
         # does 3 points of damage instead of 1 when successfully attacking
-        damage = ((3 + self.attMod) * 2) if ((3 + self.attMod)*2 > 1) else 3
+        damage = ((3 + self.attMod) ) if ((3 + self.attMod) > 1) else 3
         if attackRoll == 20:
-            target.hitPoints = target.hitPoints - damage
+            target.hitPoints = target.hitPoints - (damage*2)
             print('critical hit')
         if attackRoll >= target.ac:
             if target.hitPoints > 0:
-                target.hitPoints = target.hitPoints - (damage/2)
+                target.hitPoints = target.hitPoints - (damage)
                 print('hit')
                 self.exp += 1000
                 if (self.exp % 1000) == 0:

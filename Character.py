@@ -89,7 +89,7 @@ class Character:
         if weapon_name == 'nunchucks':
             if self.charClass != 'monk':
                 # when used by a non-monk there is a -4 penalty to attack
-                atttackRoll -= 4
+                attackRoll -= 4
             # does 6 points of damage
             damage += 6
 

@@ -23,7 +23,7 @@ class Dwarf(Character):
                 if target.hitPoints <= 0:
                     print('target is dead')
                 if target.race == 'Orc':
-                    damage = attackRoll = 2
+                    damage = attackRoll + 2
                 self.getCharSheet()
                 
             else:

@@ -3,10 +3,10 @@ from Modifiers import *
 
 class Dwarf(Character):
     def abilityModifier(self):
-        self.constitution = 11
-        self.charisma = 9 
+        self.Constitution += 1
+        self.Charisma -= 1 
 
-     # Attack Method
+    # Attack Method
     def attack(self, target):
         attackRoll= 11 + self.attRollMod
         damage = ((1 + self.attMod)) if ((1 + self.attMod) > 1) else 1
@@ -23,7 +23,7 @@ class Dwarf(Character):
                 if target.hitPoints <= 0:
                     print('target is dead')
                 if target.race == 'Orc':
-                    damage = attackRoll + 2
+                    damage = attackRoll = 2
                 self.getCharSheet()
                 
             else:
